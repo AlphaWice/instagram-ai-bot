@@ -1,11 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Instagram AI Bot</title>
+    <title>Salam AI - Instagram Bot</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        .chat-box { border: 1px solid #ddd; padding: 20px; margin: 20px 0; border-radius: 8px; }
+        input { width: 70%; padding: 10px; margin: 10px 0; }
+        button { padding: 10px 20px; background: #0070f3; color: white; border: none; cursor: pointer; }
+    </style>
 </head>
 <body>
-    <h1>Hello World! 🤖</h1>
-    <p>Instagram AI Bot - Coming Soon</p>
-    <p>Will support: English, French, Darija Arabic, Arabizi</p>
+    <h1>🤖 Salam AI</h1>
+    <p>Instagram Business Assistant - Test the AI here!</p>
+    
+    <div class="chat-box">
+        <input type="text" id="messageInput" placeholder="Type your message here..." />
+        <button onclick="sendMessage()">Send</button>
+        <div id="response" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById("messageInput");
+            const responseDiv = document.getElementById("response");
+            
+            responseDiv.innerHTML = "Thinking...";
+            
+            try {
+                const response = await fetch("/api/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: input.value })
+                });
+                
+                const data = await response.json();
+                responseDiv.innerHTML = "<strong>AI:</strong> " + data.reply;
+                input.value = "";
+            } catch (error) {
+                responseDiv.innerHTML = "Error: " + error.message;
+            }
+        }
+    </script>
 </body>
 </html>
