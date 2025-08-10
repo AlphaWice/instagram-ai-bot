@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     const { message } = req.body;
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-5", // ✅ Upgraded to GPT-5 Standard
       messages: [
         {
           role: "system",
@@ -48,6 +48,7 @@ Answer quickly and helpfully like you're chatting with a friend!`,
       reply: completion.choices[0].message.content,
     });
   } catch (error) {
+    console.error(error); // Helpful for debugging
     res.status(500).json({ error: "Failed to generate response" });
   }
 }
